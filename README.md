@@ -1,1 +1,8 @@
-# Booking-Reservation-The-Strand-Diner
+# The Strand Diner — Booking & Reservation System
+
+This repository contains a minimal full-stack booking/reservation example for The Strand Diner.
+
+Overview
+- Backend: Node.js + Express (in-memory bookings) — `backend/`
+- Frontend: Vite + React + Tailwind — `frontend/`
+

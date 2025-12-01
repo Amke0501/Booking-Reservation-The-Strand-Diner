@@ -1,0 +1,749 @@
+/* Imported from user's Strand Diner stylesheet (kept mostly intact)
+   Note: place hero images under `frontend/public/images/` with the filename
+   `The Strand Hero Page.jpg` so the URL `/images/The Strand Hero Page.jpg` resolves.
+*/
+
+:root {
+
+    --primary-color: #b8860b;
+
+    --primary-dark: #8b6508;
+
+    --secondary-color: #3a3a3a;
+
+    --text-color: #333333;
+
+    --text-light: #777777;
+
+    --light-bg: #f8f5f0;
+
+    --dark-bg: #222222;
+
+    --border-color: #e0e0e0;
+
+    --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+    --text-white: #fff;
+
+}
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+body {
+
+    color: var(--text-color);
+
+    line-height: 1.6;
+
+    background-color: #fff;
+
+}
+
+a {
+
+    text-decoration: none;
+
+    color: var(--text-color);
+
+    margin: 10px;
+
+}
+
+.container {
+
+    width: 100%;
+
+    margin: 0 auto;
+
+    padding: 0px 20px
+}
+
+nav {
+
+    background-color: var(--light-bg);
+
+    box-shadow: var(--card-shadow);
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    right: 0;
+
+    z-index: 1000;
+
+}
+
+nav h1 {
+
+    color: var(--primary-color);
+
+    font-weight: bolder;
+
+}
+
+.nav-container {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    height: 80px;
+
+    font-weight: bold;
+
+    font-size: medium;
+
+    /* adjusted font */
+
+}
+
+/* hover effect */
+
+.nav-container a:hover {
+
+    color: var(--primary-dark);
+
+    text-decoration: underline;
+
+}
+
+.reservation-button {
+
+    background-color: var(--primary-color);
+
+    color: var(--text-white);
+
+    padding: 10px 20px;
+
+}
+
+/* Hero Section */
+
+.hero {
+
+    height: 100vh;
+
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/The Strand Hero Page.jpg') no-repeat center center;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 0;
+
+    margin-top: 0;
+
+    color: #fff;
+
+}
+
+.hero h1 {
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 100px;
+
+    font-weight: 700;
+
+    margin-bottom: 20px;
+
+}
+
+.hero p {
+
+    font-style: italic;
+
+    font-size: large;
+
+}
+
+.btn {
+
+    display: inline-block;
+
+    padding: 12px 30px;
+
+    border-radius: 0;
+
+    font-weight: 500;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    text-align: center;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+}
+
+.primary-btn {
+
+    background-color: var(--primary-color);
+
+    color: #fff;
+
+    border: 2px solid var(--primary-color);
+
+}
+
+.primary-btn:hover {
+
+    background-color: var(--primary-dark);
+
+    border-color: var(--primary-dark);
+
+}
+
+.secondary-btn {
+
+    background-color: transparent;
+
+    color: var(--primary-color);
+
+    border: 3px solid var(--primary-color);
+
+}
+
+.secondary-btn:hover {
+
+    background-color: var(--primary-color);
+
+    color: #fff;
+
+}
+
+.hero-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    margin-top: 40px;
+
+}
+
+.about {
+
+    height: 80vh
+}
+
+.about-container {
+
+    display: grid;
+
+    padding: 50px 100px;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 60px;
+
+    align-items: center;
+
+}
+
+.menu {
+
+    background-color: #fff;
+
+    padding: 0 50px
+}
+
+.menu-tabs {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    margin-bottom: 50px;
+
+    flex-wrap: wrap;
+
+}
+
+.menu-tab {
+
+    padding: 10px 20px;
+
+    background-color: transparent;
+
+    border: none;
+
+    cursor: pointer;
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 18px;
+
+    color: var(--text-light);
+
+    position: relative;
+
+    text-decoration: none;
+
+}
+
+.menu-tab:hover {
+
+    color: var(--primary-color);
+
+}
+
+.menu-category {
+
+    scroll-margin-top: 100px;
+
+    margin-bottom: 60px;
+
+}
+
+.menu-category-title {
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 32px;
+
+    color: var(--primary-color);
+
+    margin-bottom: 30px;
+
+    text-align: center;
+
+}
+
+.menu-item {
+
+    display: flex;
+
+    align-items: center;
+
+    margin-bottom: 30px;
+
+    background-color: #fff;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    box-shadow: var(--card-shadow);
+
+}
+
+.menu-item:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+
+}
+
+.menu-item.featured {
+
+    position: relative;
+
+    border: 1px solid var(--primary-color);
+
+}
+
+.menu-item.featured::before {
+
+    content: '';
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 5px;
+
+    height: 100%;
+
+    background-color: var(--primary-color);
+
+}
+
+.menu-item-image {
+
+    width: 120px;
+
+    height: 120px;
+
+    overflow: hidden;
+
+    flex-shrink: 0;
+
+}
+
+.menu-item-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+.menu-item:hover .menu-item-image img {
+
+    transform: scale(1.1);
+
+}
+
+.menu-item-content {
+
+    flex: 1;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 20px;
+
+}
+
+.menu-item-info {
+
+    flex: 1;
+
+    padding-right: 15px;
+
+}
+
+.menu-item-info h3 {
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 19px;
+
+    margin-bottom: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+.badge {
+
+    background-color: var(--primary-color);
+
+    color: #fff;
+
+    font-size: 11px;
+
+    padding: 3px 8px;
+
+    border-radius: 20px;
+
+    margin-left: 10px;
+
+    text-transform: uppercase;
+
+}
+
+.menu-item-info p {
+
+    color: var(--text-light);
+
+    font-size: 15px;
+
+    line-height: 1.4;
+
+}
+
+.menu-item-price {
+
+    text-align: right;
+
+    flex-shrink: 0;
+
+}
+
+.menu-item-price span {
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 21px;
+
+    color: var(--primary-color);
+
+    font-weight: 600;
+
+    display: block;
+
+}
+
+.menu-action {
+
+    text-align: center;
+
+    margin-top: 50px;
+
+}
+
+ection {
+
+    padding: 100px 0;
+
+}
+
+.section-header {
+
+    margin-bottom: 50px;
+
+}
+
+.section-header.text-center {
+
+    text-align: center;
+
+}
+
+.section-header .subheading {
+
+    display: block;
+
+    font-family: 'Playfair Display', serif;
+
+    font-style: italic;
+
+    color: var(--primary-color);
+
+    font-size: 19px;
+
+    margin-bottom: 10px;
+
+}
+
+.section-header h2 {
+
+    font-family: 'Playfair Display', serif;
+
+    font-size: 40px;
+
+    font-weight: 700;
+
+    color: var(--secondary-color);
+
+    position: relative;
+
+    display: inline-block;
+
+}
+
+/* Reservation Section */
+
+.reservation {
+
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/The Strand Hero Page.jpg') no-repeat center center;
+
+    background-size: cover;
+
+    background-attachment: fixed;
+
+    color: #fff;
+
+}
+
+.reservation .section-header h2 {
+
+    color: #fff;
+
+}
+
+.reservation-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 60px;
+
+    align-items: center;
+
+}
+
+.reservation-content p {
+
+    color: rgba(255, 255, 255, 0.8);
+
+    margin-bottom: 30px;
+
+}
+
+.reservation-details {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 30px;
+
+    margin-top: 40px;
+
+}
+
+.reservation-item {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+}
+
+.reservation-item i {
+
+    font-size: 24px;
+
+    color: var(--primary-color);
+
+}
+
+.reservation-item h4 {
+
+    margin-bottom: 10px;
+
+    font-size: 18px;
+
+}
+
+.reservation-item p {
+
+    margin-bottom: 5px;
+
+    font-size: 14px;
+
+}
+
+.reservation-form-container {
+
+    background-color: rgba(255, 255, 255, 0.1);
+
+    padding: 40px;
+
+    backdrop-filter: blur(5px);
+
+}
+
+.reservation-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+}
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+.form-row {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+
+}
+
+.form-group label {
+
+    font-weight: 500;
+
+    font-size: 14px;
+
+}
+
+.form-group input,
+
+.form-group select,
+
+.form-group textarea {
+
+    padding: 12px 15px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    background-color: rgba(255, 255, 255, 0.1);
+
+    color: #fff;
+
+    font-family: inherit;
+
+    font-size: 16px;
+
+}
+
+.form-group input::placeholder,
+
+.form-group textarea::placeholder {
+
+    color: rgba(255, 255, 255, 0.6);
+
+}
+
+.form-group textarea {
+
+    height: 120px;
+
+    resize: none;
+
+}
+
+.reservation-form .primary-btn {
+
+    margin-top: 10px;
+
+    width: 100%;
+
+}
+
+.footer-bottom {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    color: black;
+
+}
