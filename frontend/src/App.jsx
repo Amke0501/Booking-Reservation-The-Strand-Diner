@@ -3,7 +3,7 @@ import ResourceSelector from './components/ResourceSelector'
 import ReservationForm from './components/ReservationForm'
 import SlotsView from './components/SlotsView'
 
-const API = 'http://localhost:4000'
+const API = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 
 // Convert "PM" time (e.g. "6:00 PM") to "18:00"
 function convertTo24Hour(time12h) {
