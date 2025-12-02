@@ -12,3 +12,6 @@ export default function Hero() {
     </section>
   )
 }
+
+
+// Hero component for The Strand Diner homepage
