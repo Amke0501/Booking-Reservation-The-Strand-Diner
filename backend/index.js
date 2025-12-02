@@ -18,12 +18,13 @@ const resources = [
 
 const bookings = [];
 
+// Format helpers
 function toMinutes(t) {
   const [h, m] = t.split(':').map(Number);
   return h * 60 + m;
 }
 
-function pad(n) { return n < 10 ? '0' + n : '' + n }
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
 function formatTime(mins) {
   const h = Math.floor(mins / 60);
@@ -31,31 +32,53 @@ function formatTime(mins) {
   return `${pad(h)}:${pad(m)}`;
 }
 
-// generate slots (30-min steps) for a date
+/*
+  Business Hours:
+  Lunch: 12:00 → 14:30 closing
+  Dinner: 18:00 → 22:30 closing
+
+  Slots are 30 min.
+  Closing time is NOT a bookable slot start.
+
+  Last bookable slot is (closing - 30 min).
+*/
 function generateSlotsForDate(date) {
-  // Example: lunch (12:00-14:30) and dinner (18:00-22:00)
-  const ranges = [ [12*60, 14*60 + 30], [18*60, 22*60] ];
+  const ranges = [
+    [12 * 60, 14 * 60 + 30], // 12:00 – 14:30
+    [18 * 60, 22 * 60 + 30]  // 18:00 – 22:30
+  ];
+
   const slots = [];
-  ranges.forEach(([start, end]) => {
-    for (let t = start; t <= end; t += 30) {
+
+  for (const [start, end] of ranges) {
+    for (let t = start; t < end; t += 30) {
       slots.push(formatTime(t));
     }
-  });
+  }
+
   return slots;
 }
 
 // GET /api/slots?resource=Table%201&date=2025-12-01
 app.get('/api/slots', (req, res) => {
   const { resource, date } = req.query;
-  if (!resource || !date) return res.status(400).json({ error: 'resource and date required' });
-  if (!resources.includes(resource)) return res.status(400).json({ error: 'unknown resource' });
+
+  if (!resource || !date)
+    return res.status(400).json({ error: 'resource and date required' });
+
+  if (!resources.includes(resource))
+    return res.status(400).json({ error: 'unknown resource' });
 
   const allSlots = generateSlotsForDate(date);
   const takenTimes = bookings
     .filter(b => b.resource === resource && b.date === date)
     .map(b => b.time);
 
-  const slots = allSlots.map(t => ({ time: t, available: !takenTimes.includes(t) }));
+  const slots = allSlots.map(t => ({
+    time: t,
+    available: !takenTimes.includes(t)
+  }));
+
   res.json({ resource, date, slots });
 });
 
@@ -63,17 +86,45 @@ app.get('/api/slots', (req, res) => {
 // body: { resource, date, time, name, email }
 app.post('/api/bookings', (req, res) => {
   const { resource, date, time, name, email } = req.body;
+
   if (!resource || !date || !time || !name || !email) {
-    return res.status(400).json({ error: 'resource, date, time, name, email required' });
+    return res.status(400).json({
+      error: 'resource, date, time, name, email required'
+    });
   }
-  if (!resources.includes(resource)) return res.status(400).json({ error: 'unknown resource' });
 
-  // conflict detection: exact time match for same resource/date
-  const conflict = bookings.find(b => b.resource === resource && b.date === date && b.time === time);
-  if (conflict) return res.status(409).json({ error: 'time slot already booked' });
+  if (!resources.includes(resource)) {
+    return res.status(400).json({ error: 'unknown resource' });
+  }
 
-  const id = `${Date.now()}-${Math.floor(Math.random()*10000)}`;
-  const booking = { id, resource, date, time, name, email, createdAt: new Date().toISOString() };
+  // Validate slot
+  const validSlots = generateSlotsForDate(date);
+  if (!validSlots.includes(time)) {
+    return res.status(400).json({
+      error: `Invalid time. Must be one of: ${validSlots.join(', ')}`
+    });
+  }
+
+  // Detect conflict
+  const conflict = bookings.find(
+    b => b.resource === resource && b.date === date && b.time === time
+  );
+
+  if (conflict) {
+    return res.status(409).json({ error: 'time slot already booked' });
+  }
+
+  const id = `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+  const booking = {
+    id,
+    resource,
+    date,
+    time,
+    name,
+    email,
+    createdAt: new Date().toISOString()
+  };
+
   bookings.push(booking);
   res.status(201).json(booking);
 });
@@ -81,21 +132,36 @@ app.post('/api/bookings', (req, res) => {
 // GET /api/bookings/:date/:resource
 app.get('/api/bookings/:date/:resource', (req, res) => {
   const { date, resource } = req.params;
-  if (!date || !resource) return res.status(400).json({ error: 'date and resource required' });
-  const list = bookings.filter(b => b.date === date && b.resource === resource);
+
+  if (!resources.includes(resource)) {
+    return res.status(400).json({ error: 'unknown resource' });
+  }
+
+  const list = bookings.filter(
+    b => b.date === date && b.resource === resource
+  );
+
   res.json(list);
 });
 
 // DELETE /api/bookings/:id
 app.delete('/api/bookings/:id', (req, res) => {
   const { id } = req.params;
+
   const idx = bookings.findIndex(b => b.id === id);
-  if (idx === -1) return res.status(404).json({ error: 'booking not found' });
+  if (idx === -1) {
+    return res.status(404).json({ error: 'booking not found' });
+  }
+
   const [removed] = bookings.splice(idx, 1);
   res.json({ success: true, booking: removed });
 });
 
-// Simple route to list resources
-app.get('/api/resources', (req, res) => res.json(resources));
+// GET /api/resources
+app.get('/api/resources', (req, res) => {
+  res.json(resources);
+});
 
-app.listen(PORT, () => console.log(`Backend listening on http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Backend running on http://localhost:${PORT}`)
+);

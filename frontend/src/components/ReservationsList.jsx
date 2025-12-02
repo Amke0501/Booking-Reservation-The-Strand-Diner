@@ -22,43 +22,35 @@ export default function ReservationsList({ apiRoot, date, resource, refreshKey =
   }
 
   if (!date || !resource) {
-    return <p style={{color:'rgba(255,255,255,0.7)'}}>Select resource and date to view bookings.</p>
+    return <p className="text-white/70">Select resource and date to view bookings.</p>
   }
 
   return (
-    <div style={{overflowX:'auto'}}>
+    <div className="overflow-x-auto">
       {loading ? (
-        <p style={{color:'rgba(255,255,255,0.7)'}}>Loading...</p>
+        <p className="text-white/70">Loading...</p>
       ) : list.length === 0 ? (
-        <p style={{color:'rgba(255,255,255,0.7)'}}>No bookings yet.</p>
+        <p className="text-white/70">No bookings yet.</p>
       ) : (
-        <table style={{width:'100%', borderCollapse:'collapse', color:'#fff'}}>
+        <table className="w-full border-collapse text-white">
           <thead>
-            <tr style={{borderBottom:'1px solid rgba(255,255,255,0.2)'}}>
-              <th style={{textAlign:'left', padding:'12px', fontWeight:'600'}}>Time</th>
-              <th style={{textAlign:'left', padding:'12px', fontWeight:'600'}}>Guest</th>
-              <th style={{textAlign:'left', padding:'12px', fontWeight:'600'}}>Email</th>
-              <th style={{textAlign:'center', padding:'12px', fontWeight:'600'}}>Action</th>
+            <tr className="border-b border-white/20">
+              <th className="text-left px-3 py-3 font-semibold">Time</th>
+              <th className="text-left px-3 py-3 font-semibold">Guest</th>
+              <th className="text-left px-3 py-3 font-semibold">Email</th>
+              <th className="text-center px-3 py-3 font-semibold">Action</th>
             </tr>
           </thead>
           <tbody>
             {list.map(b => (
-              <tr key={b.id} style={{borderBottom:'1px solid rgba(255,255,255,0.1)'}}>
-                <td style={{padding:'12px'}}>{b.time}</td>
-                <td style={{padding:'12px'}}>{b.name}</td>
-                <td style={{padding:'12px', fontSize:'14px'}}>{b.email}</td>
-                <td style={{padding:'12px', textAlign:'center'}}>
+              <tr key={b.id} className="border-b border-white/10">
+                <td className="px-3 py-3">{b.time}</td>
+                <td className="px-3 py-3">{b.name}</td>
+                <td className="px-3 py-3 text-sm">{b.email}</td>
+                <td className="px-3 py-3 text-center">
                   <button
                     onClick={() => handleCancel(b.id)}
-                    style={{
-                      background:'#ff6b6b',
-                      color:'#fff',
-                      border:'none',
-                      padding:'6px 12px',
-                      borderRadius:'4px',
-                      cursor:'pointer',
-                      fontSize:'12px'
-                    }}
+                    className="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600"
                   >
                     Cancel
                   </button>
