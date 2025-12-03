@@ -5,7 +5,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// const PORT = process.env.PORT || 4000;
+// ⭐ REQUIRED FOR RENDER
+const PORT = process.env.PORT || 4000;
 
 // In-memory storage
 const resources = [
@@ -19,11 +20,6 @@ const resources = [
 const bookings = [];
 
 // Format helpers
-function toMinutes(t) {
-  const [h, m] = t.split(':').map(Number);
-  return h * 60 + m;
-}
-
 function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
 function formatTime(mins) {
@@ -38,9 +34,6 @@ function formatTime(mins) {
   Dinner: 18:00 → 22:30 closing
 
   Slots are 30 min.
-  Closing time is NOT a bookable slot start.
-
-  Last bookable slot is (closing - 30 min).
 */
 function generateSlotsForDate(date) {
   const ranges = [
@@ -49,17 +42,15 @@ function generateSlotsForDate(date) {
   ];
 
   const slots = [];
-
   for (const [start, end] of ranges) {
     for (let t = start; t < end; t += 30) {
       slots.push(formatTime(t));
     }
   }
-
   return slots;
 }
 
-// GET /api/slots?resource=Table%201&date=2025-12-01
+// GET /api/slots
 app.get('/api/slots', (req, res) => {
   const { resource, date } = req.query;
 
@@ -70,6 +61,7 @@ app.get('/api/slots', (req, res) => {
     return res.status(400).json({ error: 'unknown resource' });
 
   const allSlots = generateSlotsForDate(date);
+
   const takenTimes = bookings
     .filter(b => b.resource === resource && b.date === date)
     .map(b => b.time);
@@ -83,7 +75,6 @@ app.get('/api/slots', (req, res) => {
 });
 
 // POST /api/bookings
-// body: { resource, date, time, name, email }
 app.post('/api/bookings', (req, res) => {
   const { resource, date, time, name, email } = req.body;
 
@@ -97,15 +88,13 @@ app.post('/api/bookings', (req, res) => {
     return res.status(400).json({ error: 'unknown resource' });
   }
 
-  // Validate slot
   const validSlots = generateSlotsForDate(date);
   if (!validSlots.includes(time)) {
     return res.status(400).json({
-      error: `Invalid time. Must be one of: ${validSlots.join(', ')}`
+      error: `Invalid time. Must be one of: ${validSlots.join(', ')}` 
     });
   }
 
-  // Detect conflict
   const conflict = bookings.find(
     b => b.resource === resource && b.date === date && b.time === time
   );
@@ -162,6 +151,7 @@ app.get('/api/resources', (req, res) => {
   res.json(resources);
 });
 
-// app.listen(PORT, () =>
-//   console.log(`Backend running on http://localhost:${PORT}`)
- module.exports = app;
+// START THE SERVER
+app.listen(PORT, () => {
+  console.log(`Backend running on http://localhost:${PORT}`);
+});
