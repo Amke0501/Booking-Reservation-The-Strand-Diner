@@ -152,6 +152,18 @@ app.get('/api/resources', (req, res) => {
   res.json(resources);
 });
 
+// Root route - useful for health checks and showing API info
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Booking Reservation API',
+    endpoints: {
+      resources: '/api/resources',
+      slots: '/api/slots?resource=Table%201&date=YYYY-MM-DD',
+      bookings: '/api/bookings'
+    }
+  });
+});
+
 // START THE SERVER
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);
