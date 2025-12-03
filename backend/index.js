@@ -5,7 +5,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ⭐ REQUIRED FOR RENDER
+// REQUIRED FOR RENDER
 const PORT = process.env.PORT || 4000;
 
 // In-memory storage
