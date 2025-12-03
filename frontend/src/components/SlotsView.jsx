@@ -34,6 +34,7 @@ export default function SlotsView({ slots = [], selected, onSelect }) {
           return (
             <button
               key={s.time}
+              type="button"
               disabled={!s.available}
               onClick={() => onSelect(s.time)}
               className={`p-2 rounded transition 
