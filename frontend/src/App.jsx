@@ -4,7 +4,7 @@ import ReservationForm from './components/ReservationForm'
 import SlotsView from './components/SlotsView'
 
 // Use environment variable for backend URL; fallback to Render URL if not set
-const API = import.meta.env.VITE_API_URL || 'https://booking-reservation-the-strand-diner-1.onrender.com'
+const API ='https://booking-reservation-the-strand-diner-1.onrender.com'
 
 // Convert "6:00 PM" → "18:00"
 function convertTo24Hour(time12h) {

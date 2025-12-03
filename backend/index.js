@@ -134,6 +134,7 @@ app.get('/api/bookings/:date/:resource', (req, res) => {
 });
 
 // DELETE /api/bookings/:id
+
 app.delete('/api/bookings/:id', (req, res) => {
   const { id } = req.params;
 
